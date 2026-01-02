@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<title>Paparan Digital Bahagian Pembangunan KDN</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0f2a44;
+  color: white;
+}
+.header, .footer {
+  background: #0b1f33;
+  padding: 20px;
+  font-size: 28px;
+  display: flex;
+  justify-content: space-between;
+}
+.content {
+  display: grid;
+  grid-template-columns: 35% 65%;
+  height: calc(100vh - 160px);
+}
+.box {
+  padding: 20px;
+}
+h2 {
+  border-bottom: 2px solid #ffffff33;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <div id="time"></div>
+  <div id="date"></div>
+</div>
+
+<div class="content">
+  <div class="box">
+    <h2>🕌 Waktu Solat (Putrajaya)</h2>
+    <p>Subuh : 6:05</p>
+    <p>Zohor : 1:18</p>
+    <p>Asar : 4:42</p>
+    <p>Maghrib : 7:24</p>
+    <p>Isyak : 8:36</p>
+  </div>
+
+  <div class="box">
+    <h2>📋 Mesyuarat & Program</h2>
+    <ul>
+      <li>Mesyuarat Pengurusan Bahagian</li>
+      <li>Taklimat Projek Pembangunan</li>
+      <li>Lawatan Tapak Projek</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  📢 Peringatan: Tarikh tutup pelaporan iPantau – 30 September
+</div>
+
+<script>
+function updateTime() {
+  const now = new Date();
+  document.getElementById("time").innerHTML =
+    now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' });
+  document.getElementById("date").innerHTML =
+    now.toLocaleDateString('ms-MY', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+}
+setInterval(updateTime, 1000);
+updateTime();
+</script>
+
+</body>
+</html>
