@@ -73,10 +73,49 @@ function updateTime() {
 }
 setInterval(updateTime, 1000);
 updateTime();
+  <script>
+const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwI9QP9InNk13Rzen0GD4DdgFo1Akmf8-zcnwyWbcT72lqcn7VggjRCExJq5W6Tj37d51Fu_8d7LOT/pubhtml?gid=0&single=true";
+
+fetch(sheetURL)
+  .then(res => res.text())
+  .then(html => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
+    const rows = doc.querySelectorAll("table tr");
+    const list = document.getElementById("mesyuarat-list");
+
+    list.innerHTML = "";
+
+    for (let i = 1; i < rows.length; i++) {
+      const cols = rows[i].querySelectorAll("td");
+      if (cols.length >= 3) {
+        const tarikh = cols[0].innerText.trim();
+        const masa = cols[1].innerText.trim();
+        const tajuk = cols[2].innerText.trim();
+
+        if (tajuk) {
+          const li = document.createElement("li");
+          li.textContent = `${tarikh} ${masa} – ${tajuk}`;
+          list.appendChild(li);
+        }
+      }
+    }
+
+    if (list.innerHTML === "") {
+      list.innerHTML = "<li>Tiada mesyuarat / program</li>";
+    }
+  })
+  .catch(() => {
+    document.getElementById("mesyuarat-list").innerHTML =
+      "<li>Gagal memuatkan data</li>";
+  });
+</script>
+
 </script>
 
 </body>
 </html>
+
 
 
 
