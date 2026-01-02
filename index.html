@@ -74,24 +74,23 @@ function updateTime() {
 setInterval(updateTime, 1000);
 updateTime();
  
-const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwI9QP9InNk13Rzen0GD4DdgFo1Akmf8-zcnwyWbcT72lqcn7VggjRCExJq5W6Tj37d51Fu_8d7LOT/pubhtml?gid=0&single=true";
+const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwI9QP9InNk13Rzen0GD4DdgFo1Akmf8-zcnwyWbcT72lqcn7VggjRCExJq5W6Tj37d51Fu_8d7LOT/pub?output=csv";
 
 fetch(sheetURL)
   .then(res => res.text())
-  .then(html => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
-    const rows = doc.querySelectorAll("table tr");
+  .then(csv => {
+    const lines = csv.split("\n");
     const list = document.getElementById("mesyuarat-list");
 
     list.innerHTML = "";
 
-    for (let i = 1; i < rows.length; i++) {
-      const cols = rows[i].querySelectorAll("td");
+    for (let i = 1; i < lines.length; i++) {
+      const cols = lines[i].split(",");
+
       if (cols.length >= 3) {
-        const tarikh = cols[0].innerText.trim();
-        const masa = cols[1].innerText.trim();
-        const tajuk = cols[2].innerText.trim();
+        const tarikh = cols[0]?.trim();
+        const masa = cols[1]?.trim();
+        const tajuk = cols[2]?.trim();
 
         if (tajuk) {
           const li = document.createElement("li");
@@ -115,6 +114,7 @@ fetch(sheetURL)
 
 </body>
 </html>
+
 
 
 
