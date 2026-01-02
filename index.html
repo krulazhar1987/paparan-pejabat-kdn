@@ -103,17 +103,47 @@ fetch(sheetURL)
     if (list.innerHTML === "") {
       list.innerHTML = "<li>Tiada mesyuarat / program</li>";
     }
+    startSlide();
   })
   .catch(() => {
     document.getElementById("mesyuarat-list").innerHTML =
       "<li>Gagal memuatkan data</li>";
   });
-</script>
+  let currentSlide = 0;
+const itemsPerSlide = 2;
+const slideInterval = 8000;
 
-</script>
+function startSlide() {
+  const list = document.getElementById("mesyuarat-list");
+  const items = list.querySelectorAll("li");
 
+  if (items.length <= itemsPerSlide) return;
+
+  items.forEach((item, index) => {
+    item.style.display = index < itemsPerSlide ? "list-item" : "none";
+  });
+
+  setInterval(() => {
+    items.forEach(item => (item.style.display = "none"));
+
+    for (
+      let i = currentSlide * itemsPerSlide;
+      i < (currentSlide + 1) * itemsPerSlide;
+      i++
+    ) {
+      if (items[i]) items[i].style.display = "list-item";
+    }
+
+    currentSlide++;
+    if (currentSlide * itemsPerSlide >= items.length) {
+      currentSlide = 0;
+    }
+  }, slideInterval);
+}
+</script>
 </body>
 </html>
+
 
 
 
