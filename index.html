@@ -11,7 +11,35 @@ body {
   background: #123a5f;
   color: white;
 }
-.header, .footer {
+.header {
+  background: #0b1f33;
+  padding: 15px 20px;
+  font-size: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+  .header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+  .logo {
+  height: 60px; 
+}  
+  .title-main {
+  font-size: 30px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+  .title-sub {
+  font-size: 22px;
+  opacity: 0.9;
+}
+  .header-right {
+  text-align: right;
+}
+  .footer {
   background: #0b1f33;
   padding: 20px;
   font-size: 28px;
@@ -35,8 +63,18 @@ h2 {
 <body>
 
 <div class="header">
-  <div id="time"></div>
-  <div id="date"></div>
+  <div class="header-left">
+    <img src="jata-negara.png" alt="Jata Negara" class="logo">
+    <div class="title">
+      <div class="title-main">BAHAGIAN PEMBANGUNAN</div>
+      <div class="title-sub">KEMENTERIAN DALAM NEGERI</div>
+    </div>
+  </div>
+
+  <div class="header-right">
+    <div id="time"></div>
+    <div id="date"></div>
+  </div>
 </div>
 
 <div class="content">
@@ -143,6 +181,7 @@ function startSlide() {
 </script>
 </body>
 </html>
+
 
 
 
