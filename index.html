@@ -113,14 +113,29 @@ h2 {
 
 <script>
 function updateTime() {
- function loadWaktuSolat() {
+  const now = new Date();
+  document.getElementById("time").innerHTML =
+    now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' });
+  document.getElementById("date").innerHTML =
+    now.toLocaleDateString('ms-MY', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+}
+
+setInterval(updateTime, 1000);
+updateTime();
+
+
+function loadWaktuSolat() {
   const url = "https://api.aladhan.com/v1/timingsByCity?city=Putrajaya&country=Malaysia&method=3";
 
   fetch(url)
     .then(res => res.json())
     .then(data => {
       const waktu = data.data.timings;
-
       document.getElementById("waktu-solat").innerHTML = `
         <p>Subuh : ${waktu.Fajr}</p>
         <p>Zohor : ${waktu.Dhuhr}</p>
@@ -136,15 +151,8 @@ function updateTime() {
 }
 
 loadWaktuSolat();
-  const now = new Date();
-  document.getElementById("time").innerHTML =
-    now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' });
-  document.getElementById("date").innerHTML =
-    now.toLocaleDateString('ms-MY', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-}
-setInterval(updateTime, 1000);
-updateTime();
- 
+
+
 const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwI9QP9InNk13Rzen0GD4DdgFo1Akmf8-zcnwyWbcT72lqcn7VggjRCExJq5W6Tj37d51Fu_8d7LOT/pub?output=csv";
 
 fetch(sheetURL)
@@ -152,17 +160,14 @@ fetch(sheetURL)
   .then(csv => {
     const lines = csv.split("\n");
     const list = document.getElementById("mesyuarat-list");
-
     list.innerHTML = "";
 
     for (let i = 1; i < lines.length; i++) {
       const cols = lines[i].split(",");
-
       if (cols.length >= 3) {
         const tarikh = cols[0]?.trim();
         const masa = cols[1]?.trim();
         const tajuk = cols[2]?.trim();
-
         if (tajuk) {
           const li = document.createElement("li");
           li.textContent = `${tarikh} ${masa} – ${tajuk}`;
@@ -174,13 +179,16 @@ fetch(sheetURL)
     if (list.innerHTML === "") {
       list.innerHTML = "<li>Tiada mesyuarat / program</li>";
     }
+
     startSlide();
   })
   .catch(() => {
     document.getElementById("mesyuarat-list").innerHTML =
       "<li>Gagal memuatkan data</li>";
   });
-  let currentSlide = 0;
+
+
+let currentSlide = 0;
 const itemsPerSlide = 2;
 const slideInterval = 8000;
 
@@ -212,8 +220,10 @@ function startSlide() {
   }, slideInterval);
 }
 </script>
+
 </body>
 </html>
+
 
 
 
