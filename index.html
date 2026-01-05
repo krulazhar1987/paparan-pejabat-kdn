@@ -70,6 +70,23 @@ h2 {
   line-height: 1.6;
   margin: 8px 0;
 }
+ .tag {
+  font-size: 20px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.tag-hari-ini {
+  background: #2ecc71;
+  color: #000;
+}
+
+.tag-esok {
+  background: #f1c40f;
+  color: #000;
+}
 </style>
 </head>
 
@@ -169,9 +186,27 @@ fetch(sheetURL)
         const masa = cols[1]?.trim();
         const tajuk = cols[2]?.trim();
         if (tajuk) {
-          const li = document.createElement("li");
-          li.textContent = `${tarikh} ${masa} – ${tajuk}`;
-          list.appendChild(li);
+const li = document.createElement("li");
+
+const today = new Date();
+today.setHours(0,0,0,0);
+
+const [day, month, year] = tarikh.split("/");
+const tarikhData = new Date(year, month - 1, day);
+tarikhData.setHours(0,0,0,0);
+
+let tagHTML = "";
+
+const diffDays = (tarikhData - today) / (1000 * 60 * 60 * 24);
+
+if (diffDays === 0) {
+  tagHTML = `<span class="tag tag-hari-ini">HARI INI</span>`;
+} else if (diffDays === 1) {
+  tagHTML = `<span class="tag tag-esok">ESOK</span>`;
+}
+
+li.innerHTML = `${tagHTML}${tarikh} ${masa} – ${tajuk}`;
+list.appendChild(li);
         }
       }
     }
@@ -223,6 +258,7 @@ function startSlide() {
 
 </body>
 </html>
+
 
 
 
