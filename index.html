@@ -197,7 +197,9 @@ tarikhData.setHours(0,0,0,0);
 
 let tagHTML = "";
 
-const diffDays = (tarikhData - today) / (1000 * 60 * 60 * 24);
+const diffDays = Math.round(
+  (tarikhData - today) / (1000 * 60 * 60 * 24)
+);
 
 if (diffDays === 0) {
   tagHTML = `<span class="tag tag-hari-ini">HARI INI</span>`;
@@ -258,6 +260,7 @@ function startSlide() {
 
 </body>
 </html>
+
 
 
 
