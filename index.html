@@ -64,7 +64,12 @@ h2 {
   font-size: 26px;
   line-height: 1.6;
   margin-bottom: 18px;
-} 
+}
+ #waktu-solat p {
+  font-size: 24px;
+  line-height: 1.6;
+  margin: 8px 0;
+}
 </style>
 </head>
 
@@ -88,11 +93,8 @@ h2 {
 <div class="content">
   <div class="box">
     <h2>🕌 Waktu Solat (Putrajaya)</h2>
-    <p>Subuh : 6:05</p>
-    <p>Zohor : 1:18</p>
-    <p>Asar : 4:42</p>
-    <p>Maghrib : 7:24</p>
-    <p>Isyak : 8:36</p>
+<div id="waktu-solat">
+  <p>Memuatkan waktu solat...</p>
   </div>
 
   <div class="box">
@@ -111,6 +113,29 @@ h2 {
 
 <script>
 function updateTime() {
+ function loadWaktuSolat() {
+  const url = "https://api.aladhan.com/v1/timingsByCity?city=Putrajaya&country=Malaysia&method=3";
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      const waktu = data.data.timings;
+
+      document.getElementById("waktu-solat").innerHTML = `
+        <p>Subuh : ${waktu.Fajr}</p>
+        <p>Zohor : ${waktu.Dhuhr}</p>
+        <p>Asar : ${waktu.Asr}</p>
+        <p>Maghrib : ${waktu.Maghrib}</p>
+        <p>Isyak : ${waktu.Isha}</p>
+      `;
+    })
+    .catch(() => {
+      document.getElementById("waktu-solat").innerHTML =
+        "<p>Gagal memuatkan waktu solat</p>";
+    });
+}
+
+loadWaktuSolat();
   const now = new Date();
   document.getElementById("time").innerHTML =
     now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' });
@@ -189,6 +214,7 @@ function startSlide() {
 </script>
 </body>
 </html>
+
 
 
 
