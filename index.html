@@ -87,6 +87,36 @@ h2 {
   background: #f1c40f;
   color: #000;
 }
+ .waktu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.waktu-box {
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.waktu-box .nama {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.waktu-box .masa {
+  font-size: 28px;
+}
+
+/* Warna setiap solat */
+.subuh { background: #c0392b; }
+.syuruk { background: #7f8c8d; }
+.zohor { background: #f39c12; color: #000; }
+.asar { background: #2980b9; }
+.maghrib { background: #8e44ad; }
+.isyak { background: #9b59b6; }
 </style>
 </head>
 
@@ -111,10 +141,32 @@ h2 {
  
   <div class="box">
     <h2>🕌 Waktu Solat (Putrajaya)</h2>
-    <div id="waktu-solat">
-      <p>Memuatkan waktu solat...</p>
-    </div>
- </div>
+<div id="waktu-solat" class="waktu-grid">
+  <div class="waktu-box subuh">
+    <div class="nama">Subuh</div>
+    <div class="masa">--:--</div>
+  </div>
+  <div class="waktu-box syuruk">
+    <div class="nama">Syuruk</div>
+    <div class="masa">--:--</div>
+  </div>
+  <div class="waktu-box zohor">
+    <div class="nama">Zohor</div>
+    <div class="masa">--:--</div>
+  </div>
+  <div class="waktu-box asar">
+    <div class="nama">Asar</div>
+    <div class="masa">--:--</div>
+  </div>
+  <div class="waktu-box maghrib">
+    <div class="nama">Maghrib</div>
+    <div class="masa">--:--</div>
+  </div>
+  <div class="waktu-box isyak">
+    <div class="nama">Isyak</div>
+    <div class="masa">--:--</div>
+  </div>
+</div>
 
   <div class="box">
     <h2>📋 Mesyuarat & Program</h2>
@@ -151,15 +203,17 @@ function loadWaktuSolat() {
 
   fetch(url)
     .then(res => res.json())
-    .then(data => {
-      const waktu = data.data.timings;
-      document.getElementById("waktu-solat").innerHTML = `
-        <p>Subuh : ${waktu.Fajr}</p>
-        <p>Zohor : ${waktu.Dhuhr}</p>
-        <p>Asar : ${waktu.Asr}</p>
-        <p>Maghrib : ${waktu.Maghrib}</p>
-        <p>Isyak : ${waktu.Isha}</p>
-      `;
+.then(data => {
+  const waktu = data.data.timings;
+
+  const boxes = document.querySelectorAll(".waktu-box .masa");
+
+  boxes[0].textContent = waktu.Fajr;
+  boxes[1].textContent = waktu.Sunrise;
+  boxes[2].textContent = waktu.Dhuhr;
+  boxes[3].textContent = waktu.Asr;
+  boxes[4].textContent = waktu.Maghrib;
+  boxes[5].textContent = waktu.Isha;
     })
     .catch(() => {
       document.getElementById("waktu-solat").innerHTML =
@@ -260,6 +314,7 @@ function startSlide() {
 
 </body>
 </html>
+
 
 
 
