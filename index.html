@@ -149,6 +149,17 @@ h2 {
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
   background: rgba(255,255,255,0.05);
 }
+ .poster-slider {
+  position: relative;
+}
+
+.poster-slider .poster-img {
+  display: none;
+}
+
+.poster-slider .poster-img.active {
+  display: block;
+}
  .left-column {
   display: flex;
   flex-direction: column;
@@ -156,7 +167,6 @@ h2 {
 }
 </style>
 </head>
- </div>
 <body>
  <div class="overlay">
 
@@ -211,10 +221,12 @@ h2 {
     </div>
 
     <div class="box poster-box">
-      <h2>📌 Integriti & Anti Rasuah</h2>
-      <img src="poster-anti-rasuah-1.jpg"
-           alt="Poster Anti Rasuah"
-           class="poster-img">
+     <h2>📌 Integriti & Anti Rasuah</h2>
+
+  <div class="poster-slider">
+    <img src="poster-anti-rasuah-1.jpg" class="poster-img active">
+    <img src="poster-anti-rasuah-2.jpg" class="poster-img">
+    <img src="poster-anti-rasuah-3.jpg" class="poster-img">
     </div>
 
 </div>
@@ -244,95 +256,28 @@ function updateTime() {
       year: 'numeric'
     });
 }
-
 setInterval(updateTime, 1000);
 updateTime();
 
-
+/* ========= WAKTU SOLAT ========= */
 function loadWaktuSolat() {
   const url = "https://api.aladhan.com/v1/timingsByCity?city=Putrajaya&country=Malaysia&method=3";
-
   fetch(url)
     .then(res => res.json())
-.then(data => {
-  const waktu = data.data.timings;
-
-  const boxes = document.querySelectorAll(".waktu-box .masa");
-
-  boxes[0].textContent = waktu.Fajr;
-  boxes[1].textContent = waktu.Sunrise;
-  boxes[2].textContent = waktu.Dhuhr;
-  boxes[3].textContent = waktu.Asr;
-  boxes[4].textContent = waktu.Maghrib;
-  boxes[5].textContent = waktu.Isha;
-    })
-    .catch(() => {
-      document.getElementById("waktu-solat").innerHTML =
-        "<p>Gagal memuatkan waktu solat</p>";
+    .then(data => {
+      const waktu = data.data.timings;
+      const boxes = document.querySelectorAll(".waktu-box .masa");
+      boxes[0].textContent = waktu.Fajr;
+      boxes[1].textContent = waktu.Sunrise;
+      boxes[2].textContent = waktu.Dhuhr;
+      boxes[3].textContent = waktu.Asr;
+      boxes[4].textContent = waktu.Maghrib;
+      boxes[5].textContent = waktu.Isha;
     });
 }
-
 loadWaktuSolat();
 
-
-const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwI9QP9InNk13Rzen0GD4DdgFo1Akmf8-zcnwyWbcT72lqcn7VggjRCExJq5W6Tj37d51Fu_8d7LOT/pub?output=csv";
-
-fetch(sheetURL)
-  .then(res => res.text())
-  .then(csv => {
-    const lines = csv.split("\n");
-    const list = document.getElementById("mesyuarat-list");
-    list.innerHTML = "";
-
-    for (let i = 1; i < lines.length; i++) {
-      const cols = lines[i].split(",");
-      if (cols.length >= 3) {
-        const tarikh = cols[0]?.trim();
-        const masa = cols[1]?.trim();
-        const tajuk = cols[2]?.trim();
-        if (tajuk) {
-const li = document.createElement("li");
-
-const today = new Date();
-today.setHours(0,0,0,0);
-
-const [day, month, year] = tarikh.split("/");
-const tarikhData = new Date(year, month - 1, day);
-tarikhData.setHours(0,0,0,0);
-         if (tarikhData < today) {
-  continue;
-}
-
-let tagHTML = "";
-
-const diffDays = Math.round(
-  (tarikhData - today) / (1000 * 60 * 60 * 24)
-);
-
-if (diffDays === 0) {
-  tagHTML = `<span class="tag tag-hari-ini">HARI INI</span>`;
-} else if (diffDays === 1) {
-  tagHTML = `<span class="tag tag-esok">ESOK</span>`;
-}
-
-li.innerHTML = `${tagHTML}${tarikh} ${masa} – ${tajuk}`;
-list.appendChild(li);
-        }
-      }
-    }
-
-    if (list.innerHTML === "") {
-      list.innerHTML = "<li>Tiada mesyuarat / program</li>";
-    }
-
-    startSlide();
-  })
-  .catch(() => {
-    document.getElementById("mesyuarat-list").innerHTML =
-      "<li>Gagal memuatkan data</li>";
-  });
-
-
+/* ========= MESYUARAT SLIDER ========= */
 let currentSlide = 0;
 const itemsPerSlide = 2;
 const slideInterval = 8000;
@@ -340,7 +285,6 @@ const slideInterval = 8000;
 function startSlide() {
   const list = document.getElementById("mesyuarat-list");
   const items = list.querySelectorAll("li");
-
   if (items.length <= itemsPerSlide) return;
 
   items.forEach((item, index) => {
@@ -348,50 +292,33 @@ function startSlide() {
   });
 
   setInterval(() => {
-    items.forEach(item => (item.style.display = "none"));
-
-    for (
-      let i = currentSlide * itemsPerSlide;
-      i < (currentSlide + 1) * itemsPerSlide;
-      i++
-    ) {
+    items.forEach(item => item.style.display = "none");
+    for (let i = currentSlide * itemsPerSlide;
+         i < (currentSlide + 1) * itemsPerSlide; i++) {
       if (items[i]) items[i].style.display = "list-item";
     }
-
-    currentSlide++;
-    if (currentSlide * itemsPerSlide >= items.length) {
-      currentSlide = 0;
-    }
+    currentSlide = (currentSlide + 1) % Math.ceil(items.length / itemsPerSlide);
   }, slideInterval);
 }
+
+/* ========= POSTER SLIDER ========= */
+let posterIndex = 0;
+
+function startPosterSlider() {
+  const posters = document.querySelectorAll(".poster-slider .poster-img");
+  if (posters.length <= 1) return;
+
+  setInterval(() => {
+    posters.forEach(p => p.classList.remove("active"));
+    posterIndex = (posterIndex + 1) % posters.length;
+    posters[posterIndex].classList.add("active");
+  }, 8000);
+}
+startPosterSlider();
 </script>
 </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
