@@ -297,7 +297,32 @@ function loadWaktuSolat() {
 loadWaktuSolat();
 
 const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwI9QP9InNk13Rzen0GD4DdgFo1Akmf8-zcnwyWbcT72lqcn7VggjRCExJq5W6Tj37d51Fu_8d7LOT/pub?output=csv";
+let currentSlide = 0;
+const itemsPerSlide = 2;
+const slideInterval = 8000;
 
+function startSlide() {
+  const list = document.getElementById("mesyuarat-list");
+  const items = list.querySelectorAll("li");
+
+  if (items.length <= itemsPerSlide) return;
+
+  items.forEach((item, index) => {
+    item.style.display = index < itemsPerSlide ? "list-item" : "none";
+  });
+
+  setInterval(() => {
+    items.forEach(item => item.style.display = "none");
+
+    for (let i = currentSlide * itemsPerSlide;
+         i < (currentSlide + 1) * itemsPerSlide; i++) {
+      if (items[i]) items[i].style.display = "list-item";
+    }
+
+    currentSlide = (currentSlide + 1) %
+      Math.ceil(items.length / itemsPerSlide);
+  }, slideInterval);
+}
 fetch(sheetURL)
   .then(res => res.text())
   .then(csv => {
@@ -348,6 +373,7 @@ fetch(sheetURL)
 </div>
 </body>
 </html>
+
 
 
 
