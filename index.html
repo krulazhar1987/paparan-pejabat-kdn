@@ -149,6 +149,11 @@ h2 {
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
   background: rgba(255,255,255,0.05);
 }
+ .left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 </style>
 </head>
  </div>
@@ -172,44 +177,52 @@ h2 {
 
 <div class="content">
  
-  <div class="box">
-    <h2>🕌 Waktu Solat (Putrajaya)</h2>
-<div id="waktu-solat" class="waktu-grid">
-  <div class="waktu-box subuh">
-    <div class="nama">Subuh</div>
-    <div class="masa">--:--</div>
-  </div>
-  <div class="waktu-box syuruk">
-    <div class="nama">Syuruk</div>
-    <div class="masa">--:--</div>
-  </div>
-  <div class="waktu-box zohor">
-    <div class="nama">Zohor</div>
-    <div class="masa">--:--</div>
-  </div>
-  <div class="waktu-box asar">
-    <div class="nama">Asar</div>
-    <div class="masa">--:--</div>
-  </div>
-  <div class="waktu-box maghrib">
-    <div class="nama">Maghrib</div>
-    <div class="masa">--:--</div>
-  </div>
-  <div class="waktu-box isyak">
-    <div class="nama">Isyak</div>
-    <div class="masa">--:--</div>
-  </div>
- <div class="box poster-box">
-  <h2>📌 Integriti & Anti Rasuah</h2>
-  <img src="poster-anti-rasuah-1.jpg" alt="Poster Anti Rasuah 1" class="poster-img">
-</div>
+<div class="left-column">
+
+    <div class="box">
+      <h2>🕌 Waktu Solat (Putrajaya)</h2>
+
+      <div id="waktu-solat" class="waktu-grid">
+        <div class="waktu-box subuh">
+          <div class="nama">Subuh</div>
+          <div class="masa">--:--</div>
+        </div>
+        <div class="waktu-box syuruk">
+          <div class="nama">Syuruk</div>
+          <div class="masa">--:--</div>
+        </div>
+        <div class="waktu-box zohor">
+          <div class="nama">Zohor</div>
+          <div class="masa">--:--</div>
+        </div>
+        <div class="waktu-box asar">
+          <div class="nama">Asar</div>
+          <div class="masa">--:--</div>
+        </div>
+        <div class="waktu-box maghrib">
+          <div class="nama">Maghrib</div>
+          <div class="masa">--:--</div>
+        </div>
+        <div class="waktu-box isyak">
+          <div class="nama">Isyak</div>
+          <div class="masa">--:--</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="box poster-box">
+      <h2>📌 Integriti & Anti Rasuah</h2>
+      <img src="poster-anti-rasuah-1.jpg"
+           alt="Poster Anti Rasuah"
+           class="poster-img">
+    </div>
 
 </div>
 
   <div class="box">
     <h2>📋 Mesyuarat & Program</h2>
     <ul id="mesyuarat-list">
-      <li>Memuatkan data...</li>  
+      <li>Memuatkan data...</li>
     </ul>
   </div>
 </div>
@@ -355,6 +368,7 @@ function startSlide() {
 </div>
 </body>
 </html>
+
 
 
 
