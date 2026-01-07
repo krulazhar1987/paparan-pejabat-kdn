@@ -263,6 +263,9 @@ today.setHours(0,0,0,0);
 const [day, month, year] = tarikh.split("/");
 const tarikhData = new Date(year, month - 1, day);
 tarikhData.setHours(0,0,0,0);
+         if (tarikhData < today) {
+  continue;
+}
 
 let tagHTML = "";
 
@@ -329,6 +332,7 @@ function startSlide() {
 </div>
 </body>
 </html>
+
 
 
 
