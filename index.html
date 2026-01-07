@@ -296,52 +296,59 @@ function loadWaktuSolat() {
 }
 loadWaktuSolat();
 
-/* ========= MESYUARAT SLIDER ========= */
-let currentSlide = 0;
-const itemsPerSlide = 2;
-const slideInterval = 8000;
+const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwI9QP9InNk13Rzen0GD4DdgFo1Akmf8-zcnwyWbcT72lqcn7VggjRCExJq5W6Tj37d51Fu_8d7LOT/pub?output=csv";
 
-function startSlide() {
-  const list = document.getElementById("mesyuarat-list");
-  const items = list.querySelectorAll("li");
-  if (items.length <= itemsPerSlide) return;
+fetch(sheetURL)
+  .then(res => res.text())
+  .then(csv => {
+    const lines = csv.split("\n");
+    const list = document.getElementById("mesyuarat-list");
+    list.innerHTML = "";
 
-  items.forEach((item, index) => {
-    item.style.display = index < itemsPerSlide ? "list-item" : "none";
-  });
+    const today = new Date();
+    today.setHours(0,0,0,0);
 
-  setInterval(() => {
-    items.forEach(item => item.style.display = "none");
-    for (let i = currentSlide * itemsPerSlide;
-         i < (currentSlide + 1) * itemsPerSlide; i++) {
-      if (items[i]) items[i].style.display = "list-item";
+    for (let i = 1; i < lines.length; i++) {
+      const cols = lines[i].split(",");
+      if (cols.length < 3) continue;
+
+      const tarikh = cols[0].trim();
+      const masa = cols[1].trim();
+      const tajuk = cols[2].trim();
+      if (!tajuk) continue;
+
+      const [d,m,y] = tarikh.split("/");
+      const tarikhData = new Date(y, m-1, d);
+      tarikhData.setHours(0,0,0,0);
+
+      if (tarikhData < today) continue;
+
+      let tag = "";
+      const diff = (tarikhData - today) / (1000*60*60*24);
+      if (diff === 0) tag = `<span class="tag tag-hari-ini">HARI INI</span>`;
+      else if (diff === 1) tag = `<span class="tag tag-esok">ESOK</span>`;
+
+      const li = document.createElement("li");
+      li.innerHTML = `${tag}${tarikh} ${masa} – ${tajuk}`;
+      list.appendChild(li);
     }
-    currentSlide = (currentSlide + 1) % Math.ceil(items.length / itemsPerSlide);
-  }, slideInterval);
-}
 
-/* ========= POSTER SLIDER ========= */
-let posterIndex = 0;
+    if (list.innerHTML === "") {
+      list.innerHTML = "<li>Tiada mesyuarat / program</li>";
+    }
 
-function startPosterSlider() {
-  const posters = document.querySelectorAll(".poster-slider .poster-img");
-
-  if (posters.length <= 1) return;
-
-  setInterval(() => {
-    posters[posterIndex].classList.remove("active");
-
-    posterIndex = (posterIndex + 1) % posters.length;
-
-    posters[posterIndex].classList.add("active");
-  }, 8000);
-}
-
-document.addEventListener("DOMContentLoaded", startPosterSlider);
+    // 🔥 INI KUNCI UTAMA
+    startSlide();
+  })
+  .catch(() => {
+    document.getElementById("mesyuarat-list").innerHTML =
+      "<li>Gagal memuatkan data</li>";
+  });
 </script>
 </div>
 </body>
 </html>
+
 
 
 
