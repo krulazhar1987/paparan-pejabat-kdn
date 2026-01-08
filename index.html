@@ -261,33 +261,7 @@ h2 {
   <h2>📌 Integriti & Anti Rasuah</h2>
 
   <div id="integriti-text" class="integriti-text">
-const integritiAyat = [
-  {
-    teks: "Setiap kamu adalah pemimpin, dan setiap pemimpin akan dipertanggungjawabkan atas apa yang dipimpinnya.",
-    sumber: "Hadis Riwayat al-Bukhari & Muslim"
-  },
-  {
-    teks: "Pemberi dan penerima rasuah kedua-duanya berada dalam neraka.",
-    sumber: "Hadis Riwayat Ahmad"
-  },
-  {
-    teks: "Tunaikanlah amanah kepada orang yang mempercayaimu.",
-    sumber: "Hadis Riwayat Abu Daud"
-  }
-];
-
-let integritiIndex = 0;
-
-function tukarIntegriti() {
-  const box = document.getElementById("integriti-text");
-  const data = integritiAyat[integritiIndex];
-
-  box.innerHTML = `"${data.teks}"<br><br><span class="sumber">— ${data.sumber}</span>`;
-
-  integritiIndex = (integritiIndex + 1) % integritiAyat.length;
-}
-
-setInterval(tukarIntegriti, 12000); // tukar setiap 12 saat
+Memuatkan mesej integriti...
       </div>
     </div>
 
@@ -413,10 +387,42 @@ fetch(sheetURL)
     document.getElementById("mesyuarat-list").innerHTML =
       "<li>Gagal memuatkan data</li>";
   });
+ const integritiAyat = [
+  {
+    teks: "Setiap kamu adalah pemimpin, dan setiap pemimpin akan dipertanggungjawabkan atas apa yang dipimpinnya.",
+    sumber: "Hadis Riwayat al-Bukhari & Muslim"
+  },
+  {
+    teks: "Pemberi dan penerima rasuah kedua-duanya berada dalam neraka.",
+    sumber: "Hadis Riwayat Ahmad"
+  },
+  {
+    teks: "Tunaikanlah amanah kepada orang yang mempercayaimu.",
+    sumber: "Hadis Riwayat Abu Daud"
+  }
+];
+
+let integritiIndex = 0;
+
+function tukarIntegriti() {
+  const box = document.getElementById("integriti-text");
+  const data = integritiAyat[integritiIndex];
+
+  box.innerHTML = `"${data.teks}"<br><br><span class="sumber">— ${data.sumber}</span>`;
+
+  integritiIndex = (integritiIndex + 1) % integritiAyat.length;
+}
+
+// paparan pertama
+tukarIntegriti();
+
+// tukar setiap 12 saat
+setInterval(tukarIntegriti, 12000);
 </script>
 </div>
 </body>
 </html>
+
 
 
 
