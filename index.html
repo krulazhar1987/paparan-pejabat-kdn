@@ -335,23 +335,29 @@ updateTime();
 
 /* ========= WAKTU SOLAT ========= */
 function loadWaktuSolat() {
-  const url = "https://api.aladhan.com/v1/timingsByCity?city=Putrajaya&country=Malaysia&method=3";
+  const url = "https://www.e-solat.gov.my/index.php?r=esolatApi/takwimSolat&period=today&zone=WLY01";
+
   fetch(url)
     .then(res => res.json())
     .then(data => {
-      const waktu = data.data.timings;
+      const waktu = data.prayerTime[0];
+
       const boxes = document.querySelectorAll(".waktu-box .masa");
-      boxes[0].textContent = waktu.Fajr;
-      boxes[1].textContent = waktu.Sunrise;
-      boxes[2].textContent = waktu.Dhuhr;
-      boxes[3].textContent = waktu.Asr;
-      boxes[4].textContent = waktu.Maghrib;
-      boxes[5].textContent = waktu.Isha;
+
+      boxes[0].textContent = waktu.fajr;     // Subuh
+      boxes[1].textContent = waktu.syuruk;   // Syuruk
+      boxes[2].textContent = waktu.dhuhr;    // Zohor
+      boxes[3].textContent = waktu.asr;      // Asar
+      boxes[4].textContent = waktu.maghrib;  // Maghrib
+      boxes[5].textContent = waktu.isha;     // Isyak
+    })
+    .catch(() => {
+      console.error("Gagal memuatkan waktu solat JAKIM");
     });
 }
 loadWaktuSolat();
 
-const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRwI9QP9InNk13Rzen0GD4DdgFo1Akmf8-zcnwyWbcT72lqcn7VggjRCExJq5W6Tj37d51Fu_8d7LOT/pub?output=csv";
+const sheetURL = "https://www.e-solat.gov.my/index.php?r=esolatApi/takwimSolat&period=today&zone=WLY01";
 let currentSlide = 0;
 const itemsPerSlide = 2;
 const slideInterval = 8000;
@@ -459,6 +465,7 @@ setInterval(tukarIntegriti, 12000);
 </div>
 </body>
 </html>
+
 
 
 
