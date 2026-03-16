@@ -234,6 +234,40 @@ h2 {
     transform: translateX(-100%);
   }
 }
+/* ===== MEDIA SECTION ===== */
+
+.media-grid{
+margin-top:30px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:25px;
+}
+
+.media-box{
+background:rgba(255,255,255,0.08);
+padding:15px;
+border-radius:12px;
+}
+
+.media-box h3{
+margin-top:0;
+font-size:26px;
+border-bottom:2px solid #ffffff33;
+padding-bottom:6px;
+}
+
+.poster-raya{
+width:100%;
+border-radius:10px;
+object-fit:contain;
+}
+
+.video-raya{
+width:100%;
+height:220px;
+border-radius:10px;
+}
+ 
 </style>
 </head>
 <body>
@@ -306,6 +340,27 @@ Memuatkan mesej integriti...
     <ul id="mesyuarat-list">
       <li>Memuatkan data...</li>
     </ul>
+
+   <!-- RUANG POSTER & VIDEO -->
+<div class="media-grid">
+
+<div class="media-box">
+<h3>🌙 Poster Aidilfitri</h3>
+<img src="poster-raya.png" class="poster-raya">
+</div>
+
+<div class="media-box">
+<h3>🎵 RTM Live</h3>
+
+<iframe class="tv1-live"
+src="https://www.youtube.com/live/embed/ttkL7tBLr99aoneo"
+title="RTM Live"
+frameborder="0"
+allow="autoplay; encrypted-media"
+allowfullscreen>
+</iframe>
+
+</div>
   </div>
 </div>
 
