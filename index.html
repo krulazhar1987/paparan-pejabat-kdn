@@ -241,6 +241,7 @@ margin-top:30px;
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:25px;
+align-items:stretch;
 }
 
 .media-box{
@@ -249,11 +250,9 @@ padding:15px;
 border-radius:12px;
 }
 
-.media-box h3{
-margin-top:0;
-font-size:26px;
-border-bottom:2px solid #ffffff33;
-padding-bottom:6px;
+.media-box:nth-child(2){
+display:flex;
+flex-direction:column;
 }
 
 .poster-raya{
@@ -265,8 +264,8 @@ object-fit:contain;
 .video-container{
 position:relative;
 width:100%;
-padding-bottom:56.25%; /* ratio 16:9 */
-height:0;
+height:100%;
+flex-grow:1;
 }
 
 .video-container iframe{
