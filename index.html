@@ -386,15 +386,23 @@ allowfullscreen>
 <script>
 function updateTime() {
   const now = new Date();
+
+  // Masa
   document.getElementById("time").innerHTML =
     now.toLocaleTimeString('ms-MY', { hour: '2-digit', minute: '2-digit' });
-  document.getElementById("date").innerHTML =
-    now.toLocaleDateString('ms-MY', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    });
+
+  // 🔥 Tarikh manual (confirm keluar di TV)
+  const hari = ["Ahad","Isnin","Selasa","Rabu","Khamis","Jumaat","Sabtu"];
+  const bulan = ["Januari","Februari","Mac","April","Mei","Jun",
+                 "Julai","Ogos","September","Oktober","November","Disember"];
+
+  const tarikh =
+    hari[now.getDay()] + ", " +
+    now.getDate() + " " +
+    bulan[now.getMonth()] + " " +
+    now.getFullYear();
+
+  document.getElementById("date").innerHTML = tarikh;
 }
 setInterval(updateTime, 1000);
 updateTime();
