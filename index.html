@@ -276,7 +276,6 @@ width:100%;
 height:100%;
 border-radius:10px;
 }
-}
  
 </style>
 </head>
@@ -355,10 +354,21 @@ Memuatkan mesej integriti...
 <div class="media-grid">
 
 <div class="media-box">
-<h3>🌙 Poster Aidilfitri</h3>
-<img src="poster-raya.png" class="poster-raya">
+  <h3>🌙 Poster Aidilfitri</h3>
+  <div class="poster-slider">
+  <img src="rayapb1.jpeg" class="poster-img active">
+  <img src="rayapb2.jpeg" class="poster-img">
+  <img src="rayapb3.jpeg" class="poster-img">
+  <img src="rayapb4.jpeg" class="poster-img">
+  <img src="rayapb5.jpeg" class="poster-img">
+  <img src="rayapb6.jpeg" class="poster-img">
+  <img src="rayapb7.jpeg" class="poster-img">
+  <img src="rayapb8.jpeg" class="poster-img">
+  <img src="rayapb9.jpeg" class="poster-img">
+  <img src="rayapb10.jpeg" class="poster-img">
+  <img src="rayapb11.jpeg" class="poster-img">
+  </div>
 </div>
-
 <div class="media-box">
 <h3>🎵 RTM Live</h3>
 
@@ -540,6 +550,20 @@ setInterval(tukarIntegriti, 12000);
   var iframe = document.getElementById("rtmplayer");
   iframe.src = "https://www.youtube.com/embed/y99dvC3cRwc?autoplay=1";
 }, 5000);
+let posterIndex = 0;
+
+function tukarPoster() {
+  const posters = document.querySelectorAll(".poster-img");
+
+  posters.forEach(p => p.classList.remove("active"));
+
+  posterIndex = (posterIndex + 1) % posters.length;
+
+  posters[posterIndex].classList.add("active");
+}
+
+// tukar setiap 5 saat
+setInterval(tukarPoster, 5000); 
 </script>
 </div>
 </body>
